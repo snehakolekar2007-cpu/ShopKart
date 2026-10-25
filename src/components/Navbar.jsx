@@ -1,6 +1,10 @@
+
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
-function Navbar() {
+function Navbar({ userName }) {
+  const navigate = useNavigate();
+
   return (
     <>
       {/* Top Shipping Bar */}
@@ -16,58 +20,13 @@ function Navbar() {
         <div className="container-fluid">
 
           {/* Logo */}
-          <a className="navbar-brand" href="/">
+          <Link className="navbar-brand" to="/">
             <img
-              src="/images/logo.png"
+              src="/ShopKart/images/logo.png"
               alt="ShopKart"
               className="shopkart-logo"
             />
-          </a>
-
-          {/* Categories Dropdown */}
-          <div className="dropdown category-dropdown">
-            <button
-              className="category-btn dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              All Categories
-            </button>
-
-            <ul className="dropdown-menu">
-              <li>
-                <a className="dropdown-item" href="#">
-                  Electronics
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Fashion
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Home &amp; Kitchen
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Beauty &amp; Personal Care
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Sports &amp; Fitness
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  Books &amp; Stationery
-                </a>
-              </li>
-            </ul>
-          </div>
+          </Link>
 
           {/* Mobile Toggle */}
           <button
@@ -86,65 +45,133 @@ function Navbar() {
           <div className="collapse navbar-collapse" id="shopKartNavbar">
             <ul className="navbar-nav main-nav">
               <li className="nav-item">
-                <a className="nav-link active" href="/">
+                <NavLink className="nav-link" to="/">
                   Home
-                </a>
+                </NavLink>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="/products">
+                <NavLink className="nav-link" to="/products">
                   Products
-                </a>
+                </NavLink>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <NavLink className="nav-link" to="/deals">
                   Deals
-                </a>
+                </NavLink>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <NavLink className="nav-link" to="/about">
                   About Us
-                </a>
+                </NavLink>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <NavLink className="nav-link" to="/contact">
                   Contact
+                </NavLink>
+              </li>
+
+
+              {/* Trending Link */}
+              <li className="nav-item">
+                <a
+                  className="nav-link"
+                  href="#trending"
+                  onClick={(e) => {
+                    e.preventDefault();
+
+                    if (
+                      window.location.pathname === "/ShopKart/" ||
+                      window.location.pathname === "/ShopKart"
+                    ) {
+                      document
+                        .getElementById("trending")
+                        ?.scrollIntoView({ behavior: "smooth" });
+                    } else {
+                      navigate("/");
+                      setTimeout(() => {
+                        document
+                          .getElementById("trending")
+                          ?.scrollIntoView({ behavior: "smooth" });
+                      }, 300);
+                    }
+                  }}
+                >
+                  Trending 🔥
                 </a>
               </li>
-            </ul>
+              </ul>
 
-            {/* Search */}
-            <div className="search-box">
-              <input
-                type="text"
-                placeholder="Search for products..."
-              />
-              <button className="search-btn" type="button">
-                <img src="/icons/search-icon.png" alt="Search" />
-              </button>
-            </div>
 
-            {/* Icons */}
-            <div className="nav-actions">
-              <img
-                src="/icons/heart.png"
-                alt="Wishlist"
-                className="nav-icon"
-              />
 
-              <div className="cart-wrapper">
+              {/* Search */}
+              <div className="search-box">
+                <input
+                  type="text"
+                  placeholder="Search for products..."
+                />
+                <button className="search-btn" type="button">
+                  <img
+                    src="/ShopKart/icons/search-icon.png"
+                    alt="Search"
+                  />
+                </button>
+              </div>
+
+              {/* Cart */}
+              <Link to="/cart" className="cart-wrapper">
                 <img
-                  src="/icons/cart-icon.png"
+                  src="/ShopKart/icons/cart-icon.png"
                   alt="Cart"
                   className="nav-icon"
                 />
                 <span className="cart-count">3</span>
-              </div>
-            </div>
+              </Link>
 
+              {/* Account / Greeting */}
+              {userName ? (
+                <span className="user-greeting">
+                  <img
+                    src="/ShopKart/icons/profile-icon.png"
+                    alt="Profile"
+                    className="greeting-profile-icon"
+                  />
+                  Hello, {userName}
+                </span>
+              ) : (
+                <div className="dropdown account-dropdown">
+                  <button
+                    className="account-btn"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    aria-label="My Account"
+                  >
+                    <img
+                      src="/ShopKart/icons/profile-icon.png"
+                      alt="My Account"
+                      className="profile-icon"
+                    />
+                  </button>
+
+                  <ul className="dropdown-menu account-menu">
+                    <li>
+                      <Link className="dropdown-item" to="/login">
+                        Login
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link className="dropdown-item" to="/register">
+                        Register
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
           </div>
         </div>
       </nav>

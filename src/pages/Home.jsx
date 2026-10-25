@@ -1,6 +1,6 @@
 
 import React from "react";
-import Navbar from "../components/Navbar";
+
 import "./Home.css";
 
 function Home() {
@@ -45,7 +45,7 @@ function Home() {
 ];
   return (
     <>
-      <Navbar />
+      
 
       {/* Hero Section */}
       <section className="hero-section">
